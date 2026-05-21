@@ -95,7 +95,7 @@ class FaceCaptureActivity : AppCompatActivity() {
 
                     override fun OnFaceCaptureFailed(errorMessage: String) {
 
-                        Log.e(TAG, errorMessage)
+                        // Log.e(TAG, errorMessage)
                         closeCapture()
                     }
 
