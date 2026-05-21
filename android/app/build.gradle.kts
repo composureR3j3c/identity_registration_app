@@ -47,16 +47,18 @@ dependencies {
 
     implementation(files("libs/airsnap-face-pro-core-1.2.7.aar"))
     implementation(files("libs/airsnap-face-pro-ui-1.2.7.aar"))
+    implementation(files("libs/t5ncnn-release.aar"))
+    implementation(files("libs/t5opencv-release.aar"))
 
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
 
-    val cameraxVersion = "1.1.0-alpha08"
+    val cameraxVersion = "1.5.1"
 
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
-    implementation("androidx.camera:camera-view:1.0.0-alpha28")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
 }
 
 flutter {

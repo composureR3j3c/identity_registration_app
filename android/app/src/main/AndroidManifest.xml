@@ -8,6 +8,15 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
        <activity
+            android:name=".FaceCaptureActivity"
+            android:exported="false"
+            android:theme="@style/FaceCaptureTheme" />
+
+       <activity
+            android:name="ai.tech5.pheonix.capture.activity.CaptureImageActivity"
+            android:theme="@style/FaceCaptureTheme" />
+
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
