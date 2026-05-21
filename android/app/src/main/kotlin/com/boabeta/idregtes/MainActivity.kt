@@ -1,4 +1,4 @@
-package com.boa.boaMobileBanking
+package com.boabeta.idregtes
 
 import android.app.Activity
 import android.content.Intent

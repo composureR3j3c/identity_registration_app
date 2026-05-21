@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.boa.boaMobileBanking"
+    namespace = "com.boabeta.idregtes"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.boa.boaMobileBanking"
+        applicationId = "com.boabeta.idregtes"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
