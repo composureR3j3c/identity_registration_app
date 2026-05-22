@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:identity_registration_app/services/finger_capture_service.dart';
 
 import '../services/face_capture_service.dart';
 
@@ -48,12 +52,87 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
             const SizedBox(height: 40),
             ElevatedButton.icon(
               onPressed: () async {
-                await FaceCaptureService.startEnrollment();
+                try {
+                  final result = await FaceCaptureService.startEnrollment();
+
+                  if (result != "" && result != null && result.isNotEmpty) {
+                    print("Fetched Image: $result");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Face enrollment successful'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Face enrollment failed'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
               icon: const Icon(Icons.face_retouching_natural),
               label: const Text('Enroll Face'),
             ),
-          ],
+               const SizedBox(height: 40),
+      ElevatedButton.icon(
+  onPressed: () async {
+    try {
+      // 1. Remove focus (VERY IMPORTANT)
+      FocusManager.instance.primaryFocus?.unfocus();
+
+      // 2. Force keyboard close
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+      // 3. Small delay to allow IME to settle
+      await Future.delayed(const Duration(milliseconds: 200));
+
+      final result = await FingerCaptureService.startEnrollment();
+
+      if (result != null && result.toString().isNotEmpty) {
+        print("Fetched Image: $result");
+
+        if (!context.mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Finger enrollment successful'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        if (!context.mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Finger enrollment failed'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  },
+  icon: const Icon(Icons.fingerprint),
+  label: const Text('Enroll Finger'),
+)   ],
         ),
       ),
     );

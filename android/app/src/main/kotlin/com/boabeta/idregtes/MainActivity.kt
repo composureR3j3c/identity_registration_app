@@ -2,35 +2,113 @@ package com.boabeta.idregtes
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Base64
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
 
-    private val CHANNEL = "tech5/face_capture"
-    private val REQUEST_CODE_FACE_CAPTURE = 1001
+    // =========================
+    // CHANNELS
+    // =========================
 
-    private var pendingResult: MethodChannel.Result? = null
+    private val FACE_CHANNEL =
+        "tech5/face_capture"
 
-    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        super.configureFlutterEngine(flutterEngine)
+    private val FINGER_CHANNEL =
+        "tech5/finger_capture"
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
-            .setMethodCallHandler { call, result ->
+    // =========================
+    // REQUEST CODES
+    // =========================
 
-                if (call.method == "startFaceCapture") {
+    private val REQUEST_CODE_FACE_CAPTURE =
+        1001
 
-                    pendingResult = result
+    private val REQUEST_CODE_FINGER_CAPTURE =
+        2001
 
-                    val intent = Intent(this, FaceCaptureActivity::class.java)
-                    startActivityForResult(intent, REQUEST_CODE_FACE_CAPTURE)
+    // =========================
+    // RESULTS
+    // =========================
 
-                } else {
+    private var pendingFaceResult:
+        MethodChannel.Result? = null
+
+    private var pendingFingerResult:
+        MethodChannel.Result? = null
+
+    override fun configureFlutterEngine(
+        flutterEngine: FlutterEngine
+    ) {
+
+        super.configureFlutterEngine(
+            flutterEngine
+        )
+
+        // =========================
+        // FACE CHANNEL
+        // =========================
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            FACE_CHANNEL
+        ).setMethodCallHandler { call, result ->
+
+            when (call.method) {
+
+                "startFaceCapture" -> {
+
+                    pendingFaceResult = result
+
+                    val intent = Intent(
+                        this,
+                        FaceCaptureActivity::class.java
+                    )
+
+                    startActivityForResult(
+                        intent,
+                        REQUEST_CODE_FACE_CAPTURE
+                    )
+                }
+
+                else -> {
                     result.notImplemented()
                 }
             }
+        }
+
+        // =========================
+        // FINGER CHANNEL
+        // =========================
+
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            FINGER_CHANNEL
+        ).setMethodCallHandler { call, result ->
+
+            when (call.method) {
+
+                "startFingerCapture" -> {
+
+                    pendingFingerResult = result
+
+                    val intent = Intent(
+                        this,
+                        FingerCaptureActivity::class.java
+                    )
+
+                    startActivityForResult(
+                        intent,
+                        REQUEST_CODE_FINGER_CAPTURE
+                    )
+                }
+
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
     }
 
     override fun onActivityResult(
@@ -38,18 +116,39 @@ class MainActivity : FlutterActivity() {
         resultCode: Int,
         data: Intent?
     ) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CODE_FACE_CAPTURE) {
+        super.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
 
-            if (resultCode == Activity.RESULT_OK) {
+        // =========================
+        // FACE RESULT
+        // =========================
 
-                val base64Image = data?.getStringExtra("base64Image") ?: ""
+        if (requestCode ==
+            REQUEST_CODE_FACE_CAPTURE
+        ) {
 
-                if (base64Image != null) {
-                    pendingResult?.success(base64Image)
+            if (resultCode ==
+                Activity.RESULT_OK
+            ) {
+
+                val base64Image =
+                    data?.getStringExtra(
+                        "base64Image"
+                    ) ?: ""
+
+                if (base64Image.isNotEmpty()) {
+
+                    pendingFaceResult?.success(
+                        base64Image
+                    )
+
                 } else {
-                    pendingResult?.error(
+
+                    pendingFaceResult?.error(
                         "NO_IMAGE",
                         "Face captured but image missing",
                         null
@@ -58,16 +157,68 @@ class MainActivity : FlutterActivity() {
 
             } else {
 
-                val error = data?.getStringExtra("error") ?: "Capture failed"
+                val error =
+                    data?.getStringExtra(
+                        "error"
+                    ) ?: "Face capture failed"
 
-                pendingResult?.error(
+                pendingFaceResult?.error(
                     "FACE_CAPTURE_FAILED",
                     error,
                     null
                 )
             }
 
-            pendingResult = null
+            pendingFaceResult = null
+        }
+
+        // =========================
+        // FINGER RESULT
+        // =========================
+
+        if (requestCode ==
+            REQUEST_CODE_FINGER_CAPTURE
+        ) {
+
+            if (resultCode ==
+                Activity.RESULT_OK
+            ) {
+
+                val base64Image =
+                    data?.getStringExtra(
+                        "base64Image"
+                    ) ?: ""
+
+                if (base64Image.isNotEmpty()) {
+
+                    pendingFingerResult?.success(
+                        base64Image
+                    )
+
+                } else {
+
+                    pendingFingerResult?.error(
+                        "NO_IMAGE",
+                        "Finger captured but image missing",
+                        null
+                    )
+                }
+
+            } else {
+
+                val error =
+                    data?.getStringExtra(
+                        "error"
+                    ) ?: "Finger capture failed"
+
+                pendingFingerResult?.error(
+                    "FINGER_CAPTURE_FAILED",
+                    error,
+                    null
+                )
+            }
+
+            pendingFingerResult = null
         }
     }
 }

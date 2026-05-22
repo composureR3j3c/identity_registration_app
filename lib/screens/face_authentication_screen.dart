@@ -35,13 +35,40 @@ class FaceAuthenticationScreen extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Phone Number'),
             ),
             const SizedBox(height: 40),
-            ElevatedButton.icon(
+                ElevatedButton.icon(
               onPressed: () async {
-                await FaceCaptureService.startAuthentication();
+                try {
+                  final result = await FaceCaptureService.startAuthentication();
+
+                  if (result != "" && result != null && result.isNotEmpty) {
+                    print("Fetched Image: $result");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Face authentication successful'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Face authentication failed'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
               },
               icon: const Icon(Icons.verified_user),
               label: const Text('Authenticate Face'),
             ),
+         
           ],
         ),
       ),

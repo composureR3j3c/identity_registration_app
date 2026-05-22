@@ -49,6 +49,8 @@ dependencies {
     implementation(files("libs/airsnap-face-pro-ui-1.2.7.aar"))
     implementation(files("libs/t5ncnn-release.aar"))
     implementation(files("libs/t5opencv-release.aar"))
+    implementation(files("libs/T5AirSnap-release.aar"))
+    implementation(files("libs/AirsnapFingerUI-release.aar"))
 
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")

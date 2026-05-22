@@ -11,9 +11,16 @@
             android:name=".FaceCaptureActivity"
             android:exported="false"
             android:theme="@style/FaceCaptureTheme" />
+        <activity
+            android:name=".FingerCaptureActivity"
+            android:exported="false"
+            android:theme="@style/FaceCaptureTheme" />
 
        <activity
             android:name="ai.tech5.pheonix.capture.activity.CaptureImageActivity"
+            android:theme="@style/FaceCaptureTheme" />
+       <activity
+            android:name="ai.tech5.finger.FingerCaptureActivity"
             android:theme="@style/FaceCaptureTheme" />
 
        <activity
