@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:identity_registration_app/services/finger_capture_service.dart';
 
 import '../services/face_capture_service.dart';
@@ -18,6 +15,15 @@ class FaceEnrollmentScreen extends StatefulWidget {
 class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nationalIdController = TextEditingController();
+
+  /// Dismiss the keyboard before launching a native capture activity.
+  /// Do not call [SystemChannels.textInput] hide — it can crash Samsung IMEs
+  /// with ArrayIndexOutOfBoundsException in SpannableStringBuilder.
+  Future<void> _dismissKeyboardBeforeNativeCapture() async {
+    FocusScope.of(context).unfocus();
+    await WidgetsBinding.instance.endOfFrame;
+    await Future.delayed(const Duration(milliseconds: 350));
+  }
 
   @override
   void dispose() {
@@ -53,6 +59,9 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
             ElevatedButton.icon(
               onPressed: () async {
                 try {
+                  await _dismissKeyboardBeforeNativeCapture();
+                  if (!context.mounted) return;
+
                   final result = await FaceCaptureService.startEnrollment();
 
                   if (result != "" && result != null && result.isNotEmpty) {
@@ -87,14 +96,8 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
       ElevatedButton.icon(
   onPressed: () async {
     try {
-      // 1. Remove focus (VERY IMPORTANT)
-      FocusManager.instance.primaryFocus?.unfocus();
-
-      // 2. Force keyboard close
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
-
-      // 3. Small delay to allow IME to settle
-      await Future.delayed(const Duration(milliseconds: 200));
+      await _dismissKeyboardBeforeNativeCapture();
+      if (!context.mounted) return;
 
       final result = await FingerCaptureService.startEnrollment();
 

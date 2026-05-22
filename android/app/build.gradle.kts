@@ -1,8 +1,22 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
+val tech5License =
+    localProperties.getProperty("TECH5_LICENSE", "")
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
 
 android {
     namespace = "com.boabeta.idregtes"
@@ -22,6 +36,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.boabeta.idregtes"
         minSdk = flutter.minSdkVersion
@@ -31,6 +49,7 @@ android {
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
+        buildConfigField("String", "TECH5_LICENSE", "\"$tech5License\"")
     }
 
     packaging {

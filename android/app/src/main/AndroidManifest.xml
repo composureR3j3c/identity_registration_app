@@ -5,7 +5,8 @@
        
     <application
         android:label="identity_registration_app"
-        android:name="${applicationName}"
+        android:name=".IdentityRegistrationApplication"
+        android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher">
        <activity
             android:name=".FaceCaptureActivity"

@@ -23,9 +23,8 @@ class FingerCaptureActivity : AppCompatActivity() {
         private const val TAG = "TECH5"
         private const val REQUEST_CAMERA_PERMISSION = 3001
 
-        // Empty string activates via Tech5 online portal (requires internet on first run).
-        // Replace with your project token from Tech5 if you have one.
-        private const val TECH5_PROJECT_TOKEN = ""
+        // Tech5 license: pass "" for online activation (default). Set TECH5_LICENSE in
+        // android/local.properties only for a perpetual license from your commercial agreement.
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,11 +74,32 @@ class FingerCaptureActivity : AppCompatActivity() {
 
         try {
 
-            
-            val controller = T5FingerCaptureController.getInstance()
+            Tech5NativeLibraryLoader.load()
 
-            // Pass license to the SDK capture activity (it calls initSdk internally).
-            controller.setLicense(TECH5_PROJECT_TOKEN)
+            val controller = T5FingerCaptureController.getInstance()
+            val license = BuildConfig.TECH5_LICENSE
+
+            // Perpetual: pass license string. Online: pass "" (Tech5 fetches license over the network).
+            controller.setLicense(license)
+
+            if (!controller.initSDK(this)) {
+                Log.e(TAG, "initSDK failed; online=${license.isEmpty()}")
+                setResult(
+                    Activity.RESULT_CANCELED,
+                    Intent().apply {
+                        putExtra(
+                            "error",
+                            if (license.isEmpty()) {
+                                "Tech5 online license activation failed. Ensure the device has internet on first launch."
+                            } else {
+                                "Tech5 perpetual license rejected. Verify TECH5_LICENSE in android/local.properties."
+                            }
+                        )
+                    }
+                )
+                finish()
+                return
+            }
 
             // =========================
             // OPTIONAL SETTINGS
