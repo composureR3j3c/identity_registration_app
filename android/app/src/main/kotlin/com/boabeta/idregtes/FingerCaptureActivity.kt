@@ -9,21 +9,66 @@ import ai.tech5.finger.utils.T5FingerCaptureController
 import ai.tech5.finger.utils.T5FingerCapturedListener
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class FingerCaptureActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "TECH5"
+        private const val REQUEST_CAMERA_PERMISSION = 3001
+
+        // Empty string activates via Tech5 online portal (requires internet on first run).
+        // Replace with your project token from Tech5 if you have one.
+        private const val TECH5_PROJECT_TOKEN = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (!hasCameraPermission()) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+            return
+        }
+
         startFingerCapture()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode != REQUEST_CAMERA_PERMISSION) return
+
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startFingerCapture()
+        } else {
+            Log.e(TAG, "Camera permission denied")
+            setResult(
+                Activity.RESULT_CANCELED,
+                Intent().apply { putExtra("error", "Camera permission required") }
+            )
+            finish()
+        }
+    }
+
+    private fun hasCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun startFingerCapture() {
@@ -33,15 +78,8 @@ class FingerCaptureActivity : AppCompatActivity() {
             
             val controller = T5FingerCaptureController.getInstance()
 
-            // IMPORTANT: empty string for online portal activation
-            // controller.setLicense("")
-
-            // val initialized = controller.initSDK(this)
-
-            // if (!initialized) {
-            //     Log.e("TECH5", "SDK initialization failed (license activation failed): ${initialized.toString()}")
-            //     return
-            // }
+            // Pass license to the SDK capture activity (it calls initSdk internally).
+            controller.setLicense(TECH5_PROJECT_TOKEN)
 
             // =========================
             // OPTIONAL SETTINGS
