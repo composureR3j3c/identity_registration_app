@@ -19,4 +19,11 @@
     <style name="FaceCaptureTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">?android:colorBackground</item>
     </style>
+
+    <!-- Matches demo Theme.FingerCaptureDemo.NoActionBar for SDK capture UI -->
+    <style name="FingerCaptureTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
 </resources>

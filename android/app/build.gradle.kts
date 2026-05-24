@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -28,21 +27,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-    compilerOptions {
-        jvmTarget.set(
-            org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-            )
-        }
-    }
-
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
         applicationId = "com.boabeta.idregtes"
-        minSdk = flutter.minSdkVersion
+        minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -59,8 +50,18 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("debug")
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
@@ -72,20 +73,27 @@ repositories {
 }
 
 dependencies {
-
+    // Face SDK (still bundled as AARs)
     implementation(files("libs/airsnap-face-pro-core-1.2.7.aar"))
     implementation(files("libs/airsnap-face-pro-ui-1.2.7.aar"))
-    implementation(files("libs/t5ncnn-release.aar"))
-    implementation(files("libs/t5opencv-release.aar"))
+
+    // Finger SDK — same Gradle module imports as AirsnapFingerUIDemo_with_ui_source
     implementation(files("libs/T5AirSnap-release.aar"))
     implementation(files("libs/AirsnapFingerUI-release.aar"))
+    implementation(files("libs/t5ncnn-release.aar"))
+    implementation(files("libs/t5opencv-release.aar"))
 
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+    // implementation(project(":AirsnapFinger"))
+    // implementation(project(":AirsnapFingerUI"))
+    // implementation(project(":Ncnn_CPP_20230816"))
+    // implementation(project(":OpenCV_CPP_460"))
+
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     val cameraxVersion = "1.5.1"
-
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
