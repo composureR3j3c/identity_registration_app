@@ -18,7 +18,7 @@ val tech5License =
         .replace("\"", "\\\"")
 
 android {
-    namespace = "com.boabeta.idregtes"
+    namespace = "ai.tech5.fingercapturedemo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.boabeta.idregtes"
+        applicationId = "ai.tech5.fingercapturedemo"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -63,6 +63,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -98,6 +101,7 @@ dependencies {
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
 
 flutter {

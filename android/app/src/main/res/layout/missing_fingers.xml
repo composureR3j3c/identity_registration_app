@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_white_card">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select missing fingers,\nIf any"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="start"
+        android:layout_marginBottom="20dp" />
+
+    <CheckBox
+        android:id="@+id/checkbox_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Index Finger"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Middle Finger"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_ring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ring Finger"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_little"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Little Finger"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
+    <CheckBox
+        android:id="@+id/checkbox_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="None"
+        android:checked="true" />
+
+    <Button
+        android:id="@+id/next_bt"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/next"
+        android:gravity="center"></Button>
+</LinearLayout>

@@ -18,7 +18,13 @@
         android:extractNativeLibs="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
-       <activity
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false"
+            android:theme="@style/FaceCaptureTheme">
+
+        </activity> 
+        <activity
             android:name=".FaceCaptureActivity"
             android:exported="false"
             android:theme="@style/FaceCaptureTheme" />

@@ -1,4 +1,4 @@
-package com.boabeta.idregtes;
+package ai.tech5.fingercapturedemo;
 
 import static ai.tech5.sdk.abis.T5AirSnap.StandardErrorCodes.SE_OK;
 
@@ -10,9 +10,13 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.boabeta.idregtes.tech5.SettingsPrefManager;
+import ai.tech5.fingercapturedemo.tech5.SettingsPrefManager;
 
 import java.util.LinkedHashSet;
+
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import ai.tech5.finger.utils.CaptureMode;
 import ai.tech5.finger.utils.Finger;
@@ -21,8 +25,11 @@ import ai.tech5.finger.utils.ImageConfiguration;
 import ai.tech5.finger.utils.SegmentationMode;
 import ai.tech5.finger.utils.T5FingerCaptureController;
 import ai.tech5.finger.utils.T5FingerCapturedListener;
+import ai.tech5.sdk.abis.T5AirSnap.T5AirSnap;
+import android.os.Handler;
+import android.widget.TextView;
 
-public class FingerCaptureActivity extends AppCompatActivity implements T5FingerCapturedListener {
+public class FingerCaptureActivityOld extends AppCompatActivity implements T5FingerCapturedListener {
 
     private static final String TAG = "TECH5";
     public static final String EXTRA_USERNAME = "username";
@@ -44,11 +51,12 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
 
     private void startFingerCapture() {
         try {
+        
             T5FingerCaptureController controller = T5FingerCaptureController.getInstance();
 
             // Set license first - empty string for online portal activation
-            String license = BuildConfig.TECH5_LICENSE != null ? BuildConfig.TECH5_LICENSE.trim() : "";
-            controller.setLicense(license);
+            // String license = BuildConfig.TECH5_LICENSE != null ? BuildConfig.TECH5_LICENSE.trim() : "";
+            // controller.setLicense(license);
 
             controller.setLivenessCheck(true);
             controller.setIsGetQuality(true);
@@ -82,6 +90,7 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
             controller.setSegmentedFingerImagesConfig(segmentedConfig);
 
             controller.captureFingers(this, this);
+            
         } catch (Exception e) {
             Log.e(TAG, "Unable to start finger capture", e);
             closeCapture();

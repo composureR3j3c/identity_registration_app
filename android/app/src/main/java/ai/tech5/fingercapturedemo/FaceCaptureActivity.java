@@ -1,4 +1,4 @@
-package com.boabeta.idregtes;
+package ai.tech5.fingercapturedemo;
 
 import ai.tech5.pheonix.capture.controller.AirsnapFaceThresholds;
 import ai.tech5.pheonix.capture.controller.FaceCaptureController;

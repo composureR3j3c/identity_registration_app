@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FingerCaptureActivity"
+    android:background="@drawable/background_main">
+
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/btn_settings"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--        android:src="@drawable/settings_icon"-->
+<!--    android:contentDescription="settings"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    android:layout_marginTop="16dp"-->
+<!--    android:layout_marginEnd="16dp" />-->
+
+        <!-- Name Label -->
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Name Input -->
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter name"
+            android:textColor="@color/white"
+            android:inputType="textPersonName"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:textColorHint="@color/white"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/nameLabel"/>
+
+    <TextView
+        android:id="@+id/txt_fingers_to_capture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seg_modes"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:text="Select the finger"
+        android:layout_marginTop="20dp"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText"/>
+    <RadioGroup
+        android:id="@+id/seg_modes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_fingers_to_capture"
+        android:layout_marginBottom="20dp"
+        >
+
+        <!-- Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/chk_box_left_slap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Left Slap"
+                android:textSize="16sp"
+                android:buttonTint="@color/white"
+                android:textColor="@color/white"/>
+
+            <RadioButton
+                android:id="@+id/chk_box_right_slap"
+                android:layout_width="0dp"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Right Slap"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+        </LinearLayout>
+
+        <!-- Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/chk_box_left_thumb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Left Thumb"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white" />
+
+            <RadioButton
+                android:id="@+id/chk_box_right_thumb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Right Thumb"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white" />
+        </LinearLayout>
+
+        <!-- Row 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/chk_box_left_index"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Left Index"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+
+            <RadioButton
+                android:id="@+id/chk_box_right_index"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="Right Index"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+        </LinearLayout>
+
+        <!-- Row 4 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/chk_box_left_index_middle"
+                android:layout_width="0dp"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Left Index Middle"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+
+            <RadioButton
+                android:id="@+id/chk_box_right_index_middle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="Right Index Middle"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/chk_box_4_4_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="4-4-2"
+                android:buttonTint="@color/white"
+                android:textSize="16sp"/>
+
+            <RadioButton
+                android:id="@+id/chk_box_4_4_1_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="4-4-1-1"
+                android:buttonTint="@color/white"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <!-- Centered Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/chk_box_thumbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thumbs"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:buttonTint="@color/white" />
+        </LinearLayout>
+
+    </RadioGroup>
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_cap_options"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/seg_modes"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:text="Capture Options"-->
+<!--        android:textSize="16sp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/seg_modes" />-->
+
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/livenessCheckBox"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="Liveness"-->
+<!--        android:checked="true"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/txt_cap_options" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/showEllipsesCheckBox"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:checked="true"-->
+<!--        android:text="Show Elipses"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/livenessCheckBox"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/livenessCheckBox" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/get_quality_checkbox"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Quality"-->
+<!--        android:visibility="gone"-->
+<!--        android:checked="true"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/livenessCheckBox"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/showEllipsesCheckBox" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/get_nfiq2_quality"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="NFIQ2 Quality"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/livenessCheckBox"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/get_quality_checkbox" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/prop_denoise"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Proprietary Denoise"-->
+<!--        android:checked="true"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/livenessCheckBox"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/get_nfiq2_quality" />-->
+
+<!--    <CheckBox-->
+<!--        android:id="@+id/clean_fingers"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Clean fingerprints"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/livenessCheckBox"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/prop_denoise" />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/captureSpeedTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Capture speed"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/prop_denoise"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/txt_cap_options" />-->
+
+
+<!--    <RadioGroup-->
+<!--        android:id="@+id/rad_group_cap_speed"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/captureSpeedTextView"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/captureSpeedTextView">-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/lowSpeedRadioButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checked="true"-->
+<!--            android:text="Low" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/normalSpeedRadioButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Normal" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/highSpeedRadioButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="High" />-->
+<!--    </RadioGroup>-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/captureModeTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Capture Mode"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/prop_denoise"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/rad_group_cap_speed" />-->
+
+
+<!--    <RadioGroup-->
+<!--        android:id="@+id/rad_group_cap_mode"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/captureModeTextView"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/captureModeTextView">-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/rad_btn_cap_mode_self"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checked="true"-->
+<!--            android:text="Self" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/rad_btn_cap_mode_oprtr"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Operator" />-->
+
+
+<!--    </RadioGroup>-->
+
+
+    <Button
+        android:id="@+id/btn_capture_fingers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seg_modes"
+        android:text="Capture Fingers" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

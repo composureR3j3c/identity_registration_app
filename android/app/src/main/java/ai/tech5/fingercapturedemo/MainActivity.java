@@ -1,4 +1,4 @@
-package com.boabeta.idregtes;
+package ai.tech5.fingercapturedemo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -71,19 +71,19 @@ public class MainActivity extends FlutterActivity {
 
                 Intent intent = new Intent(
                         MainActivity.this,
-                        FingerCaptureActivity.class
+                        SplashScreen.class
                 );
 
                 String username =
                         call.argument("username");
 
-                if (username != null) {
+                // if (username != null) {
 
-                    intent.putExtra(
-                            FingerCaptureActivity.EXTRA_USERNAME,
-                            username
-                    );
-                }
+                //     intent.putExtra(
+                //             FingerCaptureActivity.EXTRA_USERNAME,
+                //             username
+                //     );
+                // }
 
                 startActivityForResult(
                         intent,

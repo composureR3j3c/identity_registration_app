@@ -1,4 +1,4 @@
-package com.boabeta.idregtes;
+package ai.tech5.fingercapturedemo;
 
 import android.content.Context;
 import android.hardware.Sensor;
