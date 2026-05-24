@@ -4,20 +4,14 @@ import static ai.tech5.sdk.abis.T5AirSnap.StandardErrorCodes.SE_OK;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.boabeta.idregtes.tech5.DemoFingerCapture;
 import com.boabeta.idregtes.tech5.SettingsPrefManager;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import ai.tech5.finger.utils.CaptureMode;
@@ -27,7 +21,6 @@ import ai.tech5.finger.utils.ImageConfiguration;
 import ai.tech5.finger.utils.SegmentationMode;
 import ai.tech5.finger.utils.T5FingerCaptureController;
 import ai.tech5.finger.utils.T5FingerCapturedListener;
-import ai.tech5.sdk.abis.T5AirSnap.T5AirSnap;
 
 public class FingerCaptureActivity extends AppCompatActivity implements T5FingerCapturedListener {
 
@@ -36,27 +29,15 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
 
     private SettingsPrefManager settingsPrefManager;
     private LightSensorHelper lightSensorHelper;
-    private TextView txtVersionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
 
         lightSensorHelper = new LightSensorHelper(this);
         lightSensorHelper.start();
 
         settingsPrefManager = new SettingsPrefManager(this);
-        txtVersionName = findViewById(R.id.txt_version_name);
-
-        try {
-            T5AirSnap sdk = new T5AirSnap(this);
-            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            String versionName = pInfo.versionName;
-            txtVersionName.setText("v:" + versionName + "(" + sdk.getVersion() + ")");
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Package not found", e);
-        }
 
         startFingerCapture();
     }
@@ -64,6 +45,10 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
     private void startFingerCapture() {
         try {
             T5FingerCaptureController controller = T5FingerCaptureController.getInstance();
+
+            // Set license first - empty string for online portal activation
+            String license = BuildConfig.TECH5_LICENSE != null ? BuildConfig.TECH5_LICENSE.trim() : "";
+            controller.setLicense(license);
 
             controller.setLivenessCheck(true);
             controller.setIsGetQuality(true);
@@ -80,7 +65,7 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
             controller.setOutsideCaptureFlag(false);
 
             String username = getIntent().getStringExtra(EXTRA_USERNAME);
-            if (username != null) {
+            if (username != null && !username.isEmpty()) {
                 controller.setUsername(username);
             }
 
