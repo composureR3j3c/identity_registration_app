@@ -483,16 +483,17 @@ public void capture(ArrayList<Integer> missingfingerId){
     t5FingerCaptureController.setCaptureSpeed(captureSpeed);
     t5FingerCaptureController.setPropDenoise(settingsPrefManager.isProprietaryDenoiseEnabled());
     t5FingerCaptureController.setCleanFingerPrints(settingsPrefManager.isCleanFingerprintsEnabled());
-    System.out.println("Proprietary denoise: " + settingsPrefManager.isProprietaryDenoiseEnabled() + ", Clean fingerprints: " + settingsPrefManager.isCleanFingerprintsEnabled());
+    System.out.println("Proprietary denoise: " + settingsPrefManager.isProprietaryDenoiseEnabled() +
+     ", Clean fingerprints: " + settingsPrefManager.isCleanFingerprintsEnabled());
     float luxOutsideThreshold = 200.0f;
     float luxCurrentValue = m_lightSensorHelper.getCurrentLightValue();
 
     boolean outsideCapture = ((luxCurrentValue > luxOutsideThreshold) ||
             (luxCurrentValue < 0.0f));
 
-
+    System.err.println("Current lux: " + luxCurrentValue + ", Outside capture: " + outsideCapture);
     t5FingerCaptureController.setOutsideCaptureFlag(outsideCapture);
-
+    System.out.println("Outside capture flag set to: " + outsideCapture);
     ImageConfiguration segmentedFingersConfiguration = getImageConfiguration();
 
 
@@ -519,8 +520,9 @@ public void capture(ArrayList<Integer> missingfingerId){
     t5FingerCaptureController.setSavefingerprints(true);
     t5FingerCaptureController.setReversefingerprints(settingsPrefManager.isGetFingerReverseEnabled());
 
-
+    System.out.println("Finger capture initialized.");
     t5FingerCaptureController.captureFingers(FingerCaptureActivity.this, this);
+    System.out.println("captureFingers() called on controller.");
 
 
 }
