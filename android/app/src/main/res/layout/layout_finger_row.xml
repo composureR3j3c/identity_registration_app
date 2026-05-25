@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@android:color/transparent"
+    >
+
+
+    <ImageView
+        android:id="@+id/finger_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/finger_image"
+        app:layout_constraintStart_toEndOf="@+id/finger_image"
+        app:layout_constraintTop_toTopOf="@id/finger_image">
+
+        <TextView
+            android:id="@+id/txt_pos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pos: 7"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/txt_prop_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prop Quality: 40"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/txt_nist_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nist Quality: 40"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/txt_nfiq2_quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NFIQ2 Quality: 40"
+            android:textColor="@color/white"
+            />
+
+<!--        <TextView-->
+<!--            android:id="@+id/txt_minitia_number"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Minitias Count: 40" />-->
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

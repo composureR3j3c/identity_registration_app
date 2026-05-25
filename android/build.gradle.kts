@@ -1,3 +1,7 @@
+// Required by Tech5 demo Gradle modules (Groovy build scripts).
+extra["compileSdkVersion"] = 35
+extra["minSdkVersion"] = 23
+
 allprojects {
     repositories {
         google()

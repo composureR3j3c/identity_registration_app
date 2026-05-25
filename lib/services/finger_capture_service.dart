@@ -17,15 +17,12 @@ class FingerCaptureService {
   }
 
   static Future<String?> _startFingerCapture() async {
-    String? result = "";
     try {
-      result = await _channel.invokeMethod('startFingerCapture');
-      //await platform.invokeMethod<String>('startFingerCapture');
-
-      print("Base64 Image: $result");
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
+      final result = await _channel.invokeMethod<String>('startFingerCapture');
+      debugPrint('Finger capture result length: ${result?.length ?? 0}');
+      return result;
+    } on PlatformException {
+      rethrow;
     }
-    return result;
   }
 }

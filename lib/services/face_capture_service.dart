@@ -17,15 +17,10 @@ class FaceCaptureService {
   }
 
   static Future<String?> _startFaceCapture() async {
-    String? result = "";
     try {
-      result = await _channel.invokeMethod('startFaceCapture');
-      //await platform.invokeMethod<String>('startFaceCapture');
-
-      print("Base64 Image: $result");
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
+      return await _channel.invokeMethod<String>('startFaceCapture');
+    } on PlatformException {
+      rethrow;
     }
-    return result;
   }
 }
