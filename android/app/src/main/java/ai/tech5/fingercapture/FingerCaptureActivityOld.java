@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo;
+package com.tech5.fingercapture;
 
 import static ai.tech5.sdk.abis.T5AirSnap.StandardErrorCodes.SE_OK;
 
@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ai.tech5.fingercapturedemo.tech5.SettingsPrefManager;
+import com.tech5.fingercapture.tech5.SettingsPrefManager;
 
 import java.util.LinkedHashSet;
 

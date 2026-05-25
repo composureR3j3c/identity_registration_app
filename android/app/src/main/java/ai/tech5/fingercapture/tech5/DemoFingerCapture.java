@@ -1,9 +1,9 @@
-package ai.tech5.fingercapturedemo.tech5;
+package com.tech5.fingercapture.tech5;
 
 import android.app.Activity;
 
-import ai.tech5.fingercapturedemo.BuildConfig;
-import ai.tech5.fingercapturedemo.LightSensorHelper;
+import com.tech5.fingercapture.BuildConfig;
+import com.tech5.fingercapture.LightSensorHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

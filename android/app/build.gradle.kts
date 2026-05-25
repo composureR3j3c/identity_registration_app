@@ -18,7 +18,7 @@ val tech5License =
         .replace("\"", "\\\"")
 
 android {
-    namespace = "ai.tech5.fingercapturedemo"
+    namespace = "com.tech5.fingercapture"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ai.tech5.fingercapturedemo"
+        applicationId = "ai.tech5.fingercapture"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -46,9 +46,18 @@ android {
     packaging {
         jniLibs {
             pickFirsts += listOf("**/libc++_shared.so")
+            useLegacyPackaging = true
         }
+        
     }
-
+    androidResources {
+        noCompress += listOf(
+            "bin",
+            "param",
+            "yaml",
+            "txt"
+        )
+    }
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false

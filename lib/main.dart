@@ -4,16 +4,24 @@ import 'screens/home_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<void> requestCameraPermission() async {
-  if (await Permission.camera.isDenied) {
-    await Permission.camera.request();
-  }
+  try {
+    PermissionStatus status = await Permission.camera.request();
 
-  if (await Permission.camera.isPermanentlyDenied) {
-    openAppSettings();
+    if (status.isDenied) {
+      print("Camera permission denied");
+    } else if (status.isGranted) {
+      print("Camera permission granted");
+    } else if (status.isPermanentlyDenied) {
+      print("Camera permission permanently denied, opening settings");
+      openAppSettings();
+    }
+  } catch (e) {
+    print("Error requesting camera permission: $e");
   }
 }
+
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await requestCameraPermission();
   runApp(const IdentityRegistrationApp());

@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo;
+package com.tech5.fingercapture;
 
 import android.os.Parcel;
 import android.os.Parcelable;

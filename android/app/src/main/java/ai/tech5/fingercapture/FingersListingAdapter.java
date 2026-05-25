@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo;
+package com.tech5.fingercapture;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;

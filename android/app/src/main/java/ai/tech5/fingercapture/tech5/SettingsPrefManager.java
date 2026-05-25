@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo.tech5;
+package com.tech5.fingercapture.tech5;
 
 import android.content.Context;
 import android.content.SharedPreferences;

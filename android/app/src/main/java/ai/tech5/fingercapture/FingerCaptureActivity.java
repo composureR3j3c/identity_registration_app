@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo;
+package com.tech5.fingercapture;
 
 import static ai.tech5.sdk.abis.T5AirSnap.StandardErrorCodes.SE_OK;
 
@@ -54,7 +54,7 @@ import ai.tech5.finger.utils.SegmentationMode;
 //import ai.tech5.finger.utils.Slap;
 import ai.tech5.finger.utils.T5FingerCaptureController;
 import ai.tech5.finger.utils.T5FingerCapturedListener;
-import ai.tech5.fingercapturedemo.databinding.ActivityMainBinding;
+import com.tech5.fingercapture.databinding.ActivityMainBinding;
 import ai.tech5.sdk.abis.T5AirSnap.NistPosCode;
 
 
@@ -102,18 +102,17 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("FingerCaptureActivity", "onCreate()...");
 
         m_lightSensorHelper = new LightSensorHelper(this);
         m_lightSensorHelper.start();
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
-        Log.d("TAG", "onCreate()...");
-
         m_service = Executors.newFixedThreadPool(10);
+        System.out.println("Executor service initialized with 10 threads");
         binding.btnCaptureFingers.setOnClickListener((View v) -> {
 settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
 
@@ -386,9 +385,12 @@ settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
 //
 //    }
 public void capture(ArrayList<Integer> missingfingerId){
+    System.out.println("Starting capture " + missingfingerId);
     T5FingerCaptureController t5FingerCaptureController = T5FingerCaptureController.getInstance();
     t5FingerCaptureController.setZoomFactor(settingsPrefManager.getZoomRatio());
-    t5FingerCaptureController.setLicense("");
+    System.out.println("Zoom factor set to: " + settingsPrefManager.getZoomRatio());
+    t5FingerCaptureController.setLicense(BuildConfig.TECH5_LICENSE);
+    System.out.println("License set successfully");
 
     t5FingerCaptureController.showElipses(settingsPrefManager.isShowEllipsesEnabled());
     t5FingerCaptureController.setLivenessCheck(settingsPrefManager.isLivenessEnabled());
@@ -400,19 +402,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     t5FingerCaptureController.setDetectorThreshold(0.9f);
     t5FingerCaptureController.setUsername(binding.nameEditText.getText().toString());
     LinkedHashSet<SegmentationMode> segmentationModeSet = new LinkedHashSet<>();
-//            if (binding.chkBoxLeftSlap.isChecked()) {
-//                segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_LEFT_SLAP);
-//            }
-//            if (binding.chkBoxRightSlap.isChecked()) {
-//                segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_RIGHT_SLAP);
-//            }
-//            if (binding.chkBoxLeftThumb.isChecked()) {
-//                segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_LEFT_THUMB);
-//            }
-//
-//            if (binding.chkBoxRightThumb.isChecked()) {
-//                segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_RIGHT_THUMB);
-//            }
+    System.out.println("Segmentation modes set: " + segmentationModeSet);
     if (binding.chkBoxLeftSlap.isChecked()) {
         segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_LEFT_SLAP);
     } else if (binding.chkBoxRightSlap.isChecked()) {
@@ -441,12 +431,12 @@ public void capture(ArrayList<Integer> missingfingerId){
         segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_LEFT_THUMB);
         segmentationModeSet.add(SegmentationMode.SEGMENTATION_MODE_RIGHT_THUMB);
     }
-
+    System.out.println("Final Segmentation modes: " + segmentationModeSet);
 
     t5FingerCaptureController.setSegmentationModes(segmentationModeSet);
 
     CaptureMode captureMode = CaptureMode.CAPTURE_MODE_SELF;
-
+    System.out.println("Capture mode set to: " + captureMode);
     int mode = settingsPrefManager.getCaptureModeId();
     if (mode == 0) {
 
@@ -455,11 +445,13 @@ public void capture(ArrayList<Integer> missingfingerId){
         captureMode = CaptureMode.CAPTURE_MODE_OPERATOR;
 
     }
+    System.out.println("Final capture mode: " + captureMode);
 
 //        t5FingerCaptureController.setDetectorThreshold(settingsPrefManager.getDetectorThreshold());
     t5FingerCaptureController.setCaptureMode(captureMode);
     t5FingerCaptureController.setTitle("Finger Capture");
     t5FingerCaptureController.setShowBackButton(false);
+    System.out.println("Finger capture initialized");
 
 //        //add missing fingers here
 //        ArrayList<Integer> missingFingers = new ArrayList<>();
@@ -487,11 +479,11 @@ public void capture(ArrayList<Integer> missingfingerId){
     } else if (getspeed == 4) {
         captureSpeed = CaptureSpeed.CAPTURE_SPEED_VERYFAST;
     }
-
+    System.out.println("Capture speed set to: " + captureSpeed);
     t5FingerCaptureController.setCaptureSpeed(captureSpeed);
     t5FingerCaptureController.setPropDenoise(settingsPrefManager.isProprietaryDenoiseEnabled());
     t5FingerCaptureController.setCleanFingerPrints(settingsPrefManager.isCleanFingerprintsEnabled());
-
+    System.out.println("Proprietary denoise: " + settingsPrefManager.isProprietaryDenoiseEnabled() + ", Clean fingerprints: " + settingsPrefManager.isCleanFingerprintsEnabled());
     float luxOutsideThreshold = 200.0f;
     float luxCurrentValue = m_lightSensorHelper.getCurrentLightValue();
 

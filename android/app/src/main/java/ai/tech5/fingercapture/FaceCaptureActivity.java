@@ -1,4 +1,4 @@
-package ai.tech5.fingercapturedemo;
+package com.tech5.fingercapture;
 
 import ai.tech5.pheonix.capture.controller.AirsnapFaceThresholds;
 import ai.tech5.pheonix.capture.controller.FaceCaptureController;
