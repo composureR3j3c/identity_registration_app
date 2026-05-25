@@ -1,4 +1,4 @@
-package com.tech5.fingercapture;
+package com.boabeta.idregtes;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -41,10 +41,10 @@ public class SplashScreen extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
 
-            startActivity(new Intent(SplashScreen.this, FingerCaptureActivity.class));
+            startActivity(new Intent(SplashScreen.this, FingerCaptureActivityLocal.class));
             //  Intent intent = new Intent(
             //             SplashScreen.this,
-            //             FingerCaptureActivity.class
+            //             FingerCaptureActivityLocal.class
             //     );
             // String username = call.argument("username");
             //  String username = getIntent().getStringExtra("username");
@@ -52,7 +52,7 @@ public class SplashScreen extends AppCompatActivity {
             // if (username != null) {
 
             //     intent.putExtra(
-            //             FingerCaptureActivity.EXTRA_USERNAME,
+            //             FingerCaptureActivityLocal.EXTRA_USERNAME,
             //             username);
             // }
             finish();

@@ -1,4 +1,4 @@
-package com.tech5.fingercapture.tech5;
+package com.boabeta.idregtes.tech5;
 
 import android.content.Context;
 import android.content.SharedPreferences;

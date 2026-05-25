@@ -1,4 +1,4 @@
-package com.tech5.fingercapture;
+package com.boabeta.idregtes;
 
 import static ai.tech5.sdk.abis.T5AirSnap.StandardErrorCodes.SE_OK;
 
@@ -54,11 +54,11 @@ import ai.tech5.finger.utils.SegmentationMode;
 //import ai.tech5.finger.utils.Slap;
 import ai.tech5.finger.utils.T5FingerCaptureController;
 import ai.tech5.finger.utils.T5FingerCapturedListener;
-import com.tech5.fingercapture.databinding.ActivityMainBinding;
+import com.boabeta.idregtes.databinding.ActivityMainBinding;
 import ai.tech5.sdk.abis.T5AirSnap.NistPosCode;
 
 
-public class FingerCaptureActivity extends AppCompatActivity implements T5FingerCapturedListener {
+public class FingerCaptureActivityLocal extends AppCompatActivity implements T5FingerCapturedListener {
 
 
     ActivityMainBinding binding;
@@ -102,7 +102,7 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("FingerCaptureActivity", "onCreate()...");
+        Log.d("FingerCaptureActivityLocal", "onCreate()...");
 
         m_lightSensorHelper = new LightSensorHelper(this);
         m_lightSensorHelper.start();
@@ -114,7 +114,7 @@ public class FingerCaptureActivity extends AppCompatActivity implements T5Finger
         m_service = Executors.newFixedThreadPool(10);
         System.out.println("Executor service initialized with 10 threads");
         binding.btnCaptureFingers.setOnClickListener((View v) -> {
-settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
+settingsPrefManager=new SettingsPrefManager(FingerCaptureActivityLocal.this);
 
 //            MyApp app = (MyApp) getApplication();
 //            settingsPrefManager = new ViewModelProvider(app,
@@ -155,7 +155,7 @@ settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
 //        binding.btnSettings.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Intent intent = new Intent(FingerCaptureActivity.this, SettingsActivity.class);
+//                Intent intent = new Intent(FingerCaptureActivityLocal.this, SettingsActivity.class);
 //                startActivity(intent);
 //finish();            }
 //        });
@@ -197,7 +197,7 @@ settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
         showProgress(true);
 
         T5FingerCaptureController fingerCaptureController = T5FingerCaptureController.getInstance();
-        fingerCaptureController.deregisterDevice(FingerCaptureActivity.this, isDeviceDeregistered -> {
+        fingerCaptureController.deregisterDevice(FingerCaptureActivityLocal.this, isDeviceDeregistered -> {
             showProgress(false);
 
             if (isDeviceDeregistered) {
@@ -228,7 +228,7 @@ settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
             }
 
             if (selectedSlap != null) {
-                getmissingfingerdialogue(FingerCaptureActivity.this, selectedSlap);
+                getmissingfingerdialogue(FingerCaptureActivityLocal.this, selectedSlap);
             } else  {
                 if (!settingsPrefManager.is_Dialogue_PreviewEnabled()) {
                     Log.d("enrollactivity", "in !preferencesHelper.is_Dialogue_PreviewEnabled()");
@@ -380,7 +380,7 @@ settingsPrefManager=new SettingsPrefManager(FingerCaptureActivity.this);
 ////        t5FingerCaptureController.setSavefingerprints(settingsPrefManager.isSaveFingerprintsEnabled());
 //
 //        t5FingerCaptureController.setSavefingerprints(true);
-//        t5FingerCaptureController.captureFingers(FingerCaptureActivity.this, this);
+//        t5FingerCaptureController.captureFingers(FingerCaptureActivityLocal.this, this);
 //
 //
 //    }
@@ -389,7 +389,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     T5FingerCaptureController t5FingerCaptureController = T5FingerCaptureController.getInstance();
     t5FingerCaptureController.setZoomFactor(settingsPrefManager.getZoomRatio());
     System.out.println("Zoom factor set to: " + settingsPrefManager.getZoomRatio());
-    t5FingerCaptureController.setLicense(BuildConfig.TECH5_LICENSE);
+    t5FingerCaptureController.setLicense("");
     System.out.println("License set successfully");
 
     t5FingerCaptureController.showElipses(settingsPrefManager.isShowEllipsesEnabled());
@@ -521,7 +521,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     t5FingerCaptureController.setReversefingerprints(settingsPrefManager.isGetFingerReverseEnabled());
 
     System.out.println("Finger capture initialized.");
-    t5FingerCaptureController.captureFingers(FingerCaptureActivity.this, this);
+    t5FingerCaptureController.captureFingers(FingerCaptureActivityLocal.this, this);
     System.out.println("captureFingers() called on controller.");
 
 
@@ -708,12 +708,12 @@ public void capture(ArrayList<Integer> missingfingerId){
     public void onSuccess(FingerCaptureResult result) {
 
 //        if (isQualityOrLivenessFailed(result)) {
-//            Toast.makeText(FingerCaptureActivity.this, "Something went wrong. Try again!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(FingerCaptureActivityLocal.this, "Something went wrong. Try again!", Toast.LENGTH_LONG).show();
 //            return;
 //        }
 //        QualityLivenessResult checkResult = checkQualityLiveness(result);
 //        if (checkResult.isFailed) {  // Same as your original boolean
-//            new AlertDialog.Builder(FingerCaptureActivity.this)
+//            new AlertDialog.Builder(FingerCaptureActivityLocal.this)
 //                    .setTitle("Capture Failed")
 //                    .setMessage(checkResult.failureDetails)  // Shows finger names + scores
 //                    .setPositiveButton("Retry", null)
@@ -723,19 +723,19 @@ public void capture(ArrayList<Integer> missingfingerId){
 //        }
 //        QualityLivenessResult checkResult = checkQualityLiveness(result);
 //        if (checkResult.isFailed) {
-////            TextView messageView = new TextView(FingerCaptureActivity.this);
+////            TextView messageView = new TextView(FingerCaptureActivityLocal.this);
 ////            messageView.setText(checkResult.failureDetails);
 ////            messageView.setTextColor(Color.RED);
 ////            messageView.setPadding(50, 40, 50, 40);
 ////            messageView.setTextSize(16);
 ////
-////            new AlertDialog.Builder(FingerCaptureActivity.this)
+////            new AlertDialog.Builder(FingerCaptureActivityLocal.this)
 ////                    .setTitle("Capture Failed")
 ////                    .setView(messageView)
 ////                    .setPositiveButton("Retry", null)
 ////                    .setCancelable(false)
 ////                    .show();
-//            Intent intent = new Intent(FingerCaptureActivity.this, ResultScreen.class);
+//            Intent intent = new Intent(FingerCaptureActivityLocal.this, ResultScreen.class);
 //            intent.putExtra("checkResult",checkResult);
 //            startActivity(intent);
 //
@@ -743,7 +743,7 @@ public void capture(ArrayList<Integer> missingfingerId){
 //        }
 
         if (settingsPrefManager.isGetFingerReverseEnabled() && result.reversefingerScores!=SE_OK){
-    Toast.makeText(FingerCaptureActivity.this, "Something went wrong. Try again!", Toast.LENGTH_LONG).show();
+    Toast.makeText(FingerCaptureActivityLocal.this, "Something went wrong. Try again!", Toast.LENGTH_LONG).show();
     return;
 }
         Result captureResult = new Result();
@@ -788,7 +788,7 @@ public void capture(ArrayList<Integer> missingfingerId){
         }
 
 
-        Intent intent = new Intent(FingerCaptureActivity.this, ResultScreen.class);
+        Intent intent = new Intent(FingerCaptureActivityLocal.this, ResultScreen.class);
         intent.putExtra("result", captureResult);
         startActivity(intent);
 
@@ -798,7 +798,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     @Override
     public void onTimedout() {
 
-        Toast.makeText(FingerCaptureActivity.this, "capture timedout ", Toast.LENGTH_LONG).show();
+        Toast.makeText(FingerCaptureActivityLocal.this, "capture timedout ", Toast.LENGTH_LONG).show();
 
 
     }
@@ -806,7 +806,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     @Override
     public void onFailure(String errorMessage) {
 
-        Toast.makeText(FingerCaptureActivity.this, "error " + errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(FingerCaptureActivityLocal.this, "error " + errorMessage, Toast.LENGTH_LONG).show();
 
         Log.e("TAG", errorMessage);
     }
@@ -814,7 +814,7 @@ public void capture(ArrayList<Integer> missingfingerId){
 
     @Override
     public void onCancelled() {
-        Toast.makeText(FingerCaptureActivity.this, "User cancelled ", Toast.LENGTH_LONG).show();
+        Toast.makeText(FingerCaptureActivityLocal.this, "User cancelled ", Toast.LENGTH_LONG).show();
 
     }
 
@@ -970,7 +970,7 @@ public void capture(ArrayList<Integer> missingfingerId){
             if (isShow) {
 
                 if (dialog == null) {
-                    dialog = new ProgressDialog(FingerCaptureActivity.this);
+                    dialog = new ProgressDialog(FingerCaptureActivityLocal.this);
                     dialog.setMessage(getString(R.string.please_wait));
                     dialog.setCancelable(false);
 
@@ -989,7 +989,7 @@ public void capture(ArrayList<Integer> missingfingerId){
     }
 
     private void showToast(String message) {
-        Toast.makeText(FingerCaptureActivity.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(FingerCaptureActivityLocal.this, message, Toast.LENGTH_LONG).show();
     }
 
 

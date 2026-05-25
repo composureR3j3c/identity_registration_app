@@ -1,4 +1,4 @@
-package com.tech5.fingercapture;
+package com.boabeta.idregtes;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -80,7 +80,7 @@ public class MainActivity extends FlutterActivity {
                 // if (username != null) {
 
                 //     intent.putExtra(
-                //             FingerCaptureActivity.EXTRA_USERNAME,
+                //             FingerCaptureActivityLocal.EXTRA_USERNAME,
                 //             username
                 //     );
                 // }

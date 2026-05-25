@@ -29,7 +29,7 @@
             android:exported="false"
             android:theme="@style/FaceCaptureTheme" />
         <activity
-            android:name=".FingerCaptureActivity"
+            android:name=".FingerCaptureActivityLocal"
             android:exported="false"
             android:theme="@style/FaceCaptureTheme" />
 

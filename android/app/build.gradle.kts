@@ -18,7 +18,7 @@ val tech5License =
         .replace("\"", "\\\"")
 
 android {
-    namespace = "com.tech5.fingercapture"
+    namespace = "com.boabeta.idregtes"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

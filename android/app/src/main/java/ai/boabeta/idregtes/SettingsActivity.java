@@ -1,4 +1,4 @@
-package com.tech5.fingercapture;
+package com.boabeta.idregtes;
 
 import android.app.Application;
 import android.content.Intent;
@@ -344,7 +344,7 @@ public class SettingsActivity extends AppCompatActivity {
         prefManager.setZoomRatio(selectedZoom);
 
         //        Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(SettingsActivity.this, FingerCaptureActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, FingerCaptureActivityLocal.class);
         startActivity(intent);
         finish();
     }

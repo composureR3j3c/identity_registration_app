@@ -1,4 +1,4 @@
-package com.tech5.fingercapture;
+package com.boabeta.idregtes;
 
 import android.os.Parcel;
 import android.os.Parcelable;

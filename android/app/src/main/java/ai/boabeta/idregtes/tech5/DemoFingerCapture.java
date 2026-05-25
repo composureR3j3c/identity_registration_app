@@ -1,9 +1,9 @@
-package com.tech5.fingercapture.tech5;
+package com.boabeta.idregtes.tech5;
 
 import android.app.Activity;
 
-import com.tech5.fingercapture.BuildConfig;
-import com.tech5.fingercapture.LightSensorHelper;
+import com.boabeta.idregtes.BuildConfig;
+import com.boabeta.idregtes.LightSensorHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
