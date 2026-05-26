@@ -60,41 +60,7 @@ public class MainActivity extends FlutterActivity {
             }
         });
 
-        new MethodChannel(
-                flutterEngine.getDartExecutor().getBinaryMessenger(),
-                FINGER_CHANNEL
-        ).setMethodCallHandler((call, result) -> {
-
-            if ("startFingerCapture".equals(call.method)) {
-
-                pendingFingerResult = result;
-
-                Intent intent = new Intent(
-                        MainActivity.this,
-                        SplashScreen.class
-                );
-
-                String username =
-                        call.argument("username");
-
-                // if (username != null) {
-
-                //     intent.putExtra(
-                //             FingerCaptureActivityLocal.EXTRA_USERNAME,
-                //             username
-                //     );
-                // }
-
-                startActivityForResult(
-                        intent,
-                        REQUEST_CODE_FINGER_CAPTURE
-                );
-
-            } else {
-
-                result.notImplemented();
-            }
-        });
+       
     }
 
     private void clearKeyboardFocusBeforeFlutterCallback() {

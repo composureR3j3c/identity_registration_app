@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:identity_registration_app/services/finger_capture_service.dart';
 
 import '../services/face_capture_service.dart';
 
 class FaceEnrollmentScreen extends StatefulWidget {
-  const FaceEnrollmentScreen({required this.phoneNumber, super.key});
+  const FaceEnrollmentScreen({this.phoneNumber, super.key});
 
   final String phoneNumber;
 
@@ -116,33 +115,27 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
               readOnly: true,
               decoration: const InputDecoration(labelText: 'Phone Number'),
             ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: fullNameController,
-              focusNode: _fullNameFocus,
-              readOnly: _textFieldsLocked,
-              enableInteractiveSelection: !_textFieldsLocked,
-              decoration: const InputDecoration(labelText: 'Full Name'),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: nationalIdController,
-              focusNode: _nationalIdFocus,
-              readOnly: _textFieldsLocked,
-              enableInteractiveSelection: !_textFieldsLocked,
-              decoration: const InputDecoration(labelText: 'National ID'),
-            ),
+            // const SizedBox(height: 20),
+            // TextField(
+            //   controller: fullNameController,
+            //   focusNode: _fullNameFocus,
+            //   readOnly: _textFieldsLocked,
+            //   enableInteractiveSelection: !_textFieldsLocked,
+            //   decoration: const InputDecoration(labelText: 'Full Name'),
+            // ),
+            // const SizedBox(height: 20),
+            // TextField(
+            //   controller: nationalIdController,
+            //   focusNode: _nationalIdFocus,
+            //   readOnly: _textFieldsLocked,
+            //   enableInteractiveSelection: !_textFieldsLocked,
+            //   decoration: const InputDecoration(labelText: 'National ID'),
+            // ),
             const SizedBox(height: 40),
             ElevatedButton.icon(
               onPressed: () => _runNativeCapture(FaceCaptureService.startEnrollment),
               icon: const Icon(Icons.face_retouching_natural),
               label: const Text('Enroll Face'),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton.icon(
-              onPressed: () => _runNativeCapture(FingerCaptureService.startEnrollment),
-              icon: const Icon(Icons.fingerprint),
-              label: const Text('Enroll Finger'),
             ),
             Focus(
               focusNode: _captureFocusNode,

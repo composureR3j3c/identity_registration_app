@@ -13,36 +13,19 @@
 
        
     <application
-        android:label="identity_registration_app"
-        android:name=".MyApp"
+        android:label="face_Capture_demo"
         android:extractNativeLibs="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".SplashScreen"
-            android:exported="false"
-            android:theme="@style/FaceCaptureTheme">
-
-        </activity> 
-        <activity
             android:name=".FaceCaptureActivity"
             android:exported="false"
             android:theme="@style/FaceCaptureTheme" />
-        <activity
-            android:name=".FingerCaptureActivityLocal"
-            android:exported="false"
-            android:theme="@style/FaceCaptureTheme" />
-
+        
        <activity
             android:name="ai.tech5.pheonix.capture.activity.CaptureImageActivity"
             android:theme="@style/FaceCaptureTheme" />
-       <activity
-            android:name="ai.tech5.finger.FingerCaptureActivity"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/FingerCaptureTheme" />
-
+      
        <activity
             android:name=".MainActivity"
             android:exported="true"

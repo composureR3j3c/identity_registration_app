@@ -39,7 +39,7 @@ class IdentityRegistrationApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const HomeScreen(),
+      home: const FaceEnrollmentScreen(phoneNumber: '0912345678'),
     );
   }
 }

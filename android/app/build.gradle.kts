@@ -89,17 +89,6 @@ dependencies {
     implementation(files("libs/airsnap-face-pro-core-1.2.7.aar"))
     implementation(files("libs/airsnap-face-pro-ui-1.2.7.aar"))
 
-    // Finger SDK — same Gradle module imports as AirsnapFingerUIDemo_with_ui_source
-    implementation(files("libs/T5AirSnap-release.aar"))
-    implementation(files("libs/AirsnapFingerUI-release.aar"))
-    implementation(files("libs/t5ncnn-release.aar"))
-    implementation(files("libs/t5opencv-release.aar"))
-
-    // implementation(project(":AirsnapFinger"))
-    // implementation(project(":AirsnapFingerUI"))
-    // implementation(project(":Ncnn_CPP_20230816"))
-    // implementation(project(":OpenCV_CPP_460"))
-
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.1")
