@@ -1,4 +1,4 @@
-//package ai.tech5.fingercapturedemo.flutter
+//package com.boabeta.idregtesdemo.flutter
 //
 //import ai.tech5.airsnap_finger_flutter_plugin.Constants
 //import android.util.Base64

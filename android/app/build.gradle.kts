@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ai.tech5.fingercapture"
+        applicationId = "com.boabeta.idregtes"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -65,8 +65,8 @@ android {
         }
 
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false 
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -88,6 +88,8 @@ dependencies {
     // Face SDK (still bundled as AARs)
     implementation(files("libs/airsnap-face-pro-core-1.2.7.aar"))
     implementation(files("libs/airsnap-face-pro-ui-1.2.7.aar"))
+    implementation(files("libs/t5ncnn-release.aar"))
+    implementation(files("libs/t5opencv-release.aar"))
 
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

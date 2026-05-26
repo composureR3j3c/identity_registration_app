@@ -32,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ai.tech5.fingercapture"
+        applicationId = "com.boabeta.idregtes"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
