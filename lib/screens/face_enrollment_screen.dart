@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../services/face_capture_service.dart';
 
 class FaceEnrollmentScreen extends StatefulWidget {
-  const FaceEnrollmentScreen({this.phoneNumber, super.key});
+  const FaceEnrollmentScreen({required this.phoneNumber, super.key});
 
   final String phoneNumber;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+import 'screens/face_enrollment_screen.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
@@ -39,7 +39,7 @@ class IdentityRegistrationApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const FaceEnrollmentScreen(phoneNumber: '0912345678'),
+      home:  FaceEnrollmentScreen(phoneNumber: '0912345678'),
     );
   }
 }
