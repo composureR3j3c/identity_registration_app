@@ -27,9 +27,9 @@ public class FaceCaptureActivity extends AppCompatActivity {
     private static final double ANY_GLASS_THRESHOLD = 0.5;
     private static final double SUNGLASS_THRESHOLD = 0.5;
 
-    private static final int DEFAULT_BRISQUE_THRESHOLD = 60;
+    private static final int BRISQUE_THRESHOLD = 60;
 
-    private static final double DEFAULT_LIVENESS_THRESHOLD = 0.5;
+    private static final double LIVENESS_THRESHOLD = 0.5;
     private static final double EYE_CLOSE_THRESHOLD = 0.8;
 
     private static final float FACE_CENTRE_TOLERANCE = 10f;
@@ -49,9 +49,16 @@ public class FaceCaptureActivity extends AppCompatActivity {
             FaceCaptureController controller =
                     FaceCaptureController.getInstance();
 
+            boolean useBackCamera =
+                    getIntent().getBooleanExtra(
+                            "useBackCamera",
+                            false
+                    );
+
             controller.setAutoCapture(true);
-            controller.setUseBackCamera(false);
-            controller.setFrameCapture(true);
+            controller.setIsLivenessEnabled(true);
+            controller.setUseBackCamera(useBackCamera);
+            controller.setFrameCapture(false);
             controller.setOcclusionEnabled(true);
             controller.setEyeClosedEnabled(true);
 
@@ -92,13 +99,13 @@ public class FaceCaptureActivity extends AppCompatActivity {
             int brisqueThreshold =
                     getIntent().getIntExtra(
                             "brisqueThreshold",
-                            DEFAULT_BRISQUE_THRESHOLD
+                            60
                     );
 
             double livenessThreshold =
                     getIntent().getDoubleExtra(
                             "livenessThreshold",
-                            DEFAULT_LIVENESS_THRESHOLD
+                            0.5
                     );
 
             thresholds.setBRISQUE_THRESHOLD(
@@ -148,6 +155,14 @@ public class FaceCaptureActivity extends AppCompatActivity {
                                     "base64Image",
                                     base64Image
                             );
+                        //     resultIntent.putExtra(
+                        //             "faceTemplate",
+                        //             faceTemplateBytes
+                        //     );
+                        //     resultIntent.putExtra(
+                        //             "faceBoxLeft",
+                        //             faceBox.getLeft()
+                        //     );
 
                             setResult(
                                     Activity.RESULT_OK,

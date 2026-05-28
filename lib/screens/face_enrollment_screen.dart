@@ -25,6 +25,7 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
   final FocusNode _captureFocusNode = FocusNode(skipTraversal: true);
 
   bool _textFieldsLocked = false;
+  bool _useBackCamera = false;
 
   @override
   void initState() {
@@ -36,10 +37,12 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
     final prefs = await SharedPreferences.getInstance();
     final brisque = prefs.getInt('brisque_threshold') ?? 60;
     final liveness = prefs.getDouble('liveness_threshold') ?? 0.5;
+    final useBackCamera = prefs.getBool('use_back_camera') ?? false;
 
     setState(() {
       brisqueThresholdController.text = brisque.toString();
       livenessThresholdController.text = liveness.toString();
+      _useBackCamera = useBackCamera;
     });
   }
 
@@ -50,6 +53,7 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
 
     await prefs.setInt('brisque_threshold', brisque);
     await prefs.setDouble('liveness_threshold', liveness);
+    await prefs.setBool('use_back_camera', _useBackCamera);
   }
 
   /// Detach editable text fields before launching native capture.
@@ -107,6 +111,7 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
           ),
         );
       } else {
+        print("result is null");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Capture failed'),
@@ -115,6 +120,7 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
         );
       }
     } on PlatformException catch (e) {
+      print("PlatformException during capture: ${e.code} - ${e.message}");
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -125,10 +131,7 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     } finally {
       await _restoreAfterNativeCapture();
@@ -180,12 +183,24 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
               controller: livenessThresholdController,
               readOnly: _textFieldsLocked,
               enableInteractiveSelection: !_textFieldsLocked,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               decoration: const InputDecoration(
                 labelText: 'Liveness Threshold',
                 hintText: 'Default: 0.5',
               ),
+            ),
+            const SizedBox(height: 20),
+            SwitchListTile(
+              title: const Text('Use Back Camera'),
+              subtitle: Text(_useBackCamera ? 'Back' : 'Front'),
+              value: _useBackCamera,
+              onChanged: _textFieldsLocked
+                  ? null
+                  : (value) {
+                      setState(() => _useBackCamera = value);
+                    },
             ),
             const SizedBox(height: 40),
             ElevatedButton.icon(
@@ -200,16 +215,14 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
                   return FaceCaptureService.startEnrollment(
                     brisqueThreshold: brisque,
                     livenessThreshold: liveness,
+                    useBackCamera: _useBackCamera,
                   );
                 });
               },
               icon: const Icon(Icons.face_retouching_natural),
               label: const Text('Enroll Face'),
             ),
-            Focus(
-              focusNode: _captureFocusNode,
-              child: const SizedBox.shrink(),
-            ),
+            Focus(focusNode: _captureFocusNode, child: const SizedBox.shrink()),
           ],
         ),
       ),

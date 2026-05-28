@@ -71,6 +71,7 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
             isShrinkResources = false
+            
         }
 
         getByName("release") {

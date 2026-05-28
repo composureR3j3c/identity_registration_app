@@ -63,6 +63,13 @@ public class MainActivity extends FlutterActivity {
                     );
                 }
 
+                if (call.hasArgument("useBackCamera")) {
+                    intent.putExtra(
+                            "useBackCamera",
+                            (Boolean) call.argument("useBackCamera")
+                    );
+                }
+
                 startActivityForResult(
                         intent,
                         REQUEST_CODE_FACE_CAPTURE
