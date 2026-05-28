@@ -27,9 +27,9 @@ public class FaceCaptureActivity extends AppCompatActivity {
     private static final double ANY_GLASS_THRESHOLD = 0.5;
     private static final double SUNGLASS_THRESHOLD = 0.5;
 
-    private static final int BRISQUE_THRESHOLD = 60;
+    private static final int DEFAULT_BRISQUE_THRESHOLD = 60;
 
-    private static final double LIVENESS_THRESHOLD = 0.5;
+    private static final double DEFAULT_LIVENESS_THRESHOLD = 0.5;
     private static final double EYE_CLOSE_THRESHOLD = 0.8;
 
     private static final float FACE_CENTRE_TOLERANCE = 10f;
@@ -89,12 +89,24 @@ public class FaceCaptureActivity extends AppCompatActivity {
                     SUNGLASS_THRESHOLD
             );
 
+            int brisqueThreshold =
+                    getIntent().getIntExtra(
+                            "brisqueThreshold",
+                            DEFAULT_BRISQUE_THRESHOLD
+                    );
+
+            double livenessThreshold =
+                    getIntent().getDoubleExtra(
+                            "livenessThreshold",
+                            DEFAULT_LIVENESS_THRESHOLD
+                    );
+
             thresholds.setBRISQUE_THRESHOLD(
-                    BRISQUE_THRESHOLD
+                    brisqueThreshold
             );
 
             thresholds.setLIVENESS_THRESHOLD(
-                    LIVENESS_THRESHOLD
+                    livenessThreshold
             );
 
             thresholds.setEYE_CLOSE_THRESHOLD(

@@ -49,6 +49,20 @@ public class MainActivity extends FlutterActivity {
                         FaceCaptureActivity.class
                 );
 
+                if (call.hasArgument("brisqueThreshold")) {
+                    intent.putExtra(
+                            "brisqueThreshold",
+                            ((Number) call.argument("brisqueThreshold")).intValue()
+                    );
+                }
+
+                if (call.hasArgument("livenessThreshold")) {
+                    intent.putExtra(
+                            "livenessThreshold",
+                            ((Number) call.argument("livenessThreshold")).doubleValue()
+                    );
+                }
+
                 startActivityForResult(
                         intent,
                         REQUEST_CODE_FACE_CAPTURE
@@ -60,7 +74,7 @@ public class MainActivity extends FlutterActivity {
             }
         });
 
-       
+
     }
 
     private void clearKeyboardFocusBeforeFlutterCallback() {

@@ -31,17 +31,17 @@ val localProperties = java.util.Properties().apply {
     }
 }
 
-val tech5SdkDir =
-    localProperties.getProperty("tech5.sdk.dir")
-        ?: "/home/bereket/Documents/new tech 5 sdks/SampleSourceCode_with_UI_code_v6.6.30/AirsnapFingerUIDemo_with_ui_source"
+// val tech5SdkDir =
+//     localProperties.getProperty("tech5.sdk.dir")
+//         ?: "/home/bereket/Documents/new tech 5 sdks/SampleSourceCode_with_UI_code_v6.6.30/AirsnapFingerUIDemo_with_ui_source"
 
 include(":app")
-include(":AirsnapFinger")
-include(":AirsnapFingerUI")
-include(":Ncnn_CPP_20230816")
-include(":OpenCV_CPP_460")
+// include(":AirsnapFinger")
+// include(":AirsnapFingerUI")
+// include(":Ncnn_CPP_20230816")
+// include(":OpenCV_CPP_460")
 
-project(":AirsnapFinger").projectDir = file("$tech5SdkDir/AirsnapFinger")
-project(":AirsnapFingerUI").projectDir = file("$tech5SdkDir/AirsnapFingerUI")
-project(":Ncnn_CPP_20230816").projectDir = file("$tech5SdkDir/Ncnn_CPP_20230816")
-project(":OpenCV_CPP_460").projectDir = file("$tech5SdkDir/OpenCV_CPP_460")
+// project(":AirsnapFinger").projectDir = file("$tech5SdkDir/AirsnapFinger")
+// project(":AirsnapFingerUI").projectDir = file("$tech5SdkDir/AirsnapFingerUI")
+// project(":Ncnn_CPP_20230816").projectDir = file("$tech5SdkDir/Ncnn_CPP_20230816")
+// project(":OpenCV_CPP_460").projectDir = file("$tech5SdkDir/OpenCV_CPP_460")

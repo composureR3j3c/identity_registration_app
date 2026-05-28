@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -12,10 +13,12 @@ val localProperties = Properties().apply {
     }
 }
 
-val tech5License =
-    localProperties.getProperty("TECH5_LICENSE", "")
-        .replace("\\", "\\\\")
-        .replace("\"", "\\\"")
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
 
 android {
     namespace = "com.boabeta.idregtes"
@@ -25,6 +28,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
     }
 
     buildFeatures {
@@ -40,7 +51,6 @@ android {
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
-        buildConfigField("String", "TECH5_LICENSE", "\"$tech5License\"")
     }
 
     packaging {
@@ -52,7 +62,6 @@ android {
     }
     androidResources {
         noCompress += listOf(
-            "bin",
             "param",
             "yaml",
             "txt"
@@ -65,8 +74,9 @@ android {
         }
 
         getByName("release") {
-            isMinifyEnabled = false 
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -76,6 +86,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    
 }
 
 repositories {
