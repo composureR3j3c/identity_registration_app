@@ -8,7 +8,7 @@ class FaceCaptureService {
     await _startFaceCapture();
   }
 
-  static Future<String?> startEnrollment({
+  static Future<Map<dynamic, dynamic>?> startEnrollment({
     int? brisqueThreshold,
     double? livenessThreshold,
     bool? useBackCamera,
@@ -20,11 +20,11 @@ class FaceCaptureService {
     );
   }
 
-  static Future<String?> startAuthentication() async {
+  static Future<Map<dynamic, dynamic>?> startAuthentication() async {
     return _startFaceCapture();
   }
 
-  static Future<String?> _startFaceCapture({
+  static Future<Map<dynamic, dynamic>?> _startFaceCapture({
     int? brisqueThreshold,
     double? livenessThreshold,
     bool? useBackCamera,
@@ -40,12 +40,18 @@ class FaceCaptureService {
       if (useBackCamera != null) {
         args['useBackCamera'] = useBackCamera;
       }
-       final result= await _channel.invokeMethod<String>(
+      final result = await _channel.invokeMethod(
         'startFaceCapture',
         args.isEmpty ? null : args,
       );
-      print('Face capture succeded $result');
-     
+      print('Face capture succeded base64Image: ${result?["base64Image"]}');
+      print(
+        'Face capture succeded faceBoxLiveness: ${result?["faceBoxLiveness"]}',
+      );
+      print(
+        'Face capture succeded faceBoxBrisque: ${result?["faceBoxBrisque"]}',
+      );
+
       return result;
     } on PlatformException catch (e) {
       // throw Exception('Face capture failed: ${e.code} - ${e.message}');

@@ -95,7 +95,9 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
     super.dispose();
   }
 
-  Future<void> _runNativeCapture(Future<String?> Function() capture) async {
+  Future<void> _runNativeCapture(
+    Future<Map<dynamic, dynamic>?> Function() capture,
+  ) async {
     await _prepareForNativeCapture();
     if (!mounted) return;
 
@@ -104,19 +106,14 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
       if (!mounted) return;
 
       if (result != null && result.isNotEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Capture successful'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        print("Face capture result: $result");
+        _showCaptureResultDialog(context, result);
       } else {
         print("result is null");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Capture failed'),
-            backgroundColor: Colors.red,
-          ),
+        _showAlertDialog(
+          context,
+          title: 'Enrollment Failed!',
+          message: 'Face enrollment not successful!',
         );
       }
     } on PlatformException catch (e) {
@@ -212,11 +209,13 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
                       int.tryParse(brisqueThresholdController.text) ?? 60;
                   final liveness =
                       double.tryParse(livenessThresholdController.text) ?? 0.5;
-                  return FaceCaptureService.startEnrollment(
+                  final result = await FaceCaptureService.startEnrollment(
                     brisqueThreshold: brisque,
                     livenessThreshold: liveness,
                     useBackCamera: _useBackCamera,
                   );
+
+                  return result != null ? result : null;
                 });
               },
               icon: const Icon(Icons.face_retouching_natural),
@@ -226,6 +225,89 @@ class _FaceEnrollmentScreenState extends State<FaceEnrollmentScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  static void _showAlertDialog(
+    BuildContext context, {
+    required String title,
+    required String message,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static void _showCaptureResultDialog(BuildContext context, result) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Authentication Successful'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Face authenticated successfully!'),
+                const SizedBox(height: 16),
+                // if (result?["faceBoxLiveness"] as double?
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Liveness:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        result?["faceBoxLiveness"]?.toStringAsFixed(2) ?? 'N/A',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+                // if (result["faceBoxBrisque"].toStringAsFixed(4) != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Quality:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        result?["faceBoxBrisque"]?.toStringAsFixed(2) ?? 'N/A',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
